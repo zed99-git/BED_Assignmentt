@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event App</title>
+    <link rel="stylesheet" href="styles/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+          <h1>Upcoming Event: Workshop 2024</h1>
+          <p>Date: Aug 10-15, 2024</p>
+          <p>Location: Outram Rd, Singapore 169608, Singapore General Hospital</p>
+      </header>
+      <main>
+        <section id="about">
+            <h2>About the Event</h2>
+            <p>Join us for an essential hospital workshop designed for healthcare professionals! Over two days, gain invaluable insights, hands-on training, and networking opportunities, all set in a state-of-the-art facility. Don’t miss this chance to enhance your skills and connect with experts in the field.</p>
+        </section>
+
+        <h2>Event Schedule</h2>
+        <section id="event-list">
+            
+        </section>
+
+        <section id="Session">
+            <h2>Book your Session Now!</h2>
+            <p>Sessions are filling up quickly! Don’t miss out on this amazing opportunity. Reserve your spot today!</p>
+            <form id="bookingForm">
+              <div>
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" name="name" required>
+              </div>
+              <div>
+                  <label for="email">Email:</label>
+                  <input type="email" id="email" name="email" required>
+              </div>  
+              <div>
+                  <label for="session_id">Session ID:</label>
+                  <input type="number" id="session_id" name="session_id" required>
+              </div>
+              <button type="submit">Book Session</button>
+          </form>
+        </section>
+    </main>
+
+    <footer class="footer-first">
+        <p>&copy; Copyright by DataStatistics.inc . All rights reserved.</p>
+    </footer>
+</div>
+
+    <script src="scripts/script.js"></script>
+  </body>
+</html>
