@@ -63,23 +63,6 @@ const deleteDRS = async(req,res) =>{
         res.status(500).send("Error deleting Data")
     }
 }
-const searchData = async (req, res) => {
-    const searchTerm = req.query.week;
-    console.log(`Search query week: ${searchTerm}`);
-    try {
-        const data = await DRS.getDRSByWeekly(parseInt(searchTerm, 10)); // Change: Parse search term as integer
-        console.log("Query Result:", data);
-        if (!data) {
-            return res.status(404).send("Data not found"); // Change: Add 404 response if no data found
-        }
-        res.json(data);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            message: "Error searching data"
-        });
-    }
-};
 
 module.exports = {
     getAllDRS,

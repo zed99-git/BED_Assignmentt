@@ -22,8 +22,6 @@ app.post("/data",controller.createDRS);
 app.delete("/data/:weekly",controller.deleteDRS);
 app.put("/data/:weekly",controller.updateDRS);
 
-app.get("/data/search",controller.searchData);
-
 app.listen(port, async () => {
   try {
     // Connect to the database

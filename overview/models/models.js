@@ -88,24 +88,6 @@ class DRS{
         connection.close();
         return result.rowsAffected > 0;
     }
-    static async searchData(searchTerm){
-        const connection = await sql.connect(dbConfig);
-
-        try{
-            const sqlQuery = `SELECT * FROM DRS WHERE weekly = @weekly`;
-
-            const request = connection.request();
-            request.input("weekly", parseInt(searchTerm, 10)); 
-
-            const result = await request.query(sqlQuery);
-
-            return result.recordset;
-        } catch(error){
-            throw new Error("Error searching data");
-        }finally{
-            await connection.close();
-        }
-    }
 }
 
 module.exports = DRS;

@@ -133,7 +133,7 @@ async function fetchData() {
       console.log(`Submitting search for week: ${week}`);
 
       try {
-          const response = await fetch(`http://localhost:3000/data/search?week=${week}`);
+          const response = await fetch(`http://localhost:3000/data/${week}`);
           console.log(`Response status: ${response.status}`);
           if (!response.ok) {
               throw new Error("Data not found or error retrieving data");
