@@ -19,18 +19,18 @@
         <button id="addDataBtn" class="searchbar">Add Data</button>
         <button id="deleteDataBtn" class="searchbar">Delete Data</button>
         <button id="updateDataBtn" class="searchbar">Update Data</button>
-        
+         <!-- shoows all data -->
         <div id="dataContainer"></div>
     
-        <!-- Form for Add/Update -->
+        <!-- Form for Add -->
         <div id="formContainer" style="display:none;">
             <form id="dataForm">
-                <label for="dengue">Dengue:</label>
+                <label for="dengue">Data Field 1:</label>
                 <input type="text" id="dengue" name="dengue" required>
-                <label for="dataField1">Data Field 1:</label>
-                <input type="text" id="dataField1" name="dataField1" required>
-                <label for="dataField2">Data Field 2:</label>
-                <input type="text" id="dataField2" name="dataField2" required>
+                <label for="acute_upper_respiratory_tract_infections">Data Field 2:</label>
+                <input type="text" id="acute_upper_respiratory_tract_infections" name="acute_upper_respiratory_tract_infections" required>
+                <label for="acute_diarrhoea">Data Field 3:</label>
+                <input type="text" id="acute_diarrhoea" name="acute_diarrhoea" required>
                 <button type="submit">Submit</button>
             </form>
         </div>
@@ -43,6 +43,23 @@
             </form>
         </div>
 
+         <!-- form for Update -->
+        <div id="updateContainer" style="display:none;">
+            <form id="updateForm">
+                <label for="updateWeekly">Weekly:</label>
+                <input type="number" id="updateWeekly" name="weekly" required>
+                <label for="dengue">Data Field 1:</label>
+                <input type="text" id="dengue" name="dengue" required>
+                <label for="acute_upper_respiratory_tract_infections">Data Field 2:</label>
+                <input type="text" id="acute_upper_respiratory_tract_infections" name="acute_upper_respiratory_tract_infections" required>
+                <label for="acute_diarrhoea">Data Field 3:</label>
+                <input type="text" id="acute_diarrhoea" name="acute_diarrhoea" required>
+                <button type="submit">Update</button>
+            </form>
+        </div>
+
+
+         <!-- Prompt for searching weekly -->
     <form id="searchForm">
         <label for="week">Enter Week:</label>
         <input type="number" id="week" name="week" min="1" max="25" placeholder="Type the week you want to search" style="width: 13.5%;">

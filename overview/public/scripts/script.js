@@ -59,8 +59,8 @@ document.getElementById('deleteDataBtn').addEventListener('click', () => {
 });
 
 document.getElementById('updateDataBtn').addEventListener('click', () => {
-  document.getElementById('formContainer').style.display = 'block';
-  document.getElementById('dataForm').onsubmit = async (event) => {
+  document.getElementById('updateContainer').style.display = 'block';
+  document.getElementById('updateForm').onsubmit = async (event) => {
       event.preventDefault();
       const formData = new FormData(event.target);
       const data = Object.fromEntries(formData.entries());
@@ -79,7 +79,7 @@ document.getElementById('updateDataBtn').addEventListener('click', () => {
           }
           alert('Data updated successfully');
           event.target.reset();
-          document.getElementById('formContainer').style.display = 'none';
+          document.getElementById('updateContainer').style.display = 'none';
       } catch (error) {
           console.error('Error updating data:', error);
       }
