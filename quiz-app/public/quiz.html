@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <header>
+        <h1>Southeast Asia's Readiness</h1>
+    </header>
     <div class="container">
-        <h1>Quiz App</h1>
+        <h2>Healthcare Quiz</h2>
         <button id="startQuiz">Start Quiz</button>
         
         <div id="quizContainer" style="display: none;">
@@ -23,11 +26,13 @@
             <input type="text" id="username" placeholder="Enter your name" autocomplete="name">
             <button id="saveScore">Save Score</button>
         </div>
-        
-        <div id="leaderboard">
-            <h2>Top 5 Scores</h2>
-            <ol id="leaderboardList"></ol>
-        </div>
+    </div>
+    
+    <div id="leaderboardContainer" class="container">
+        <h2>Top 5 Scores</h2>
+        <ol id="leaderboardList"></ol>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

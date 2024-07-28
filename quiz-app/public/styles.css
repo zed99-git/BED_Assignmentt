@@ -4,30 +4,42 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
-    background-color: #f4f4f4;
+    background-color: #689dff;
+}
+
+header {
+    text-align: center;
+    margin: 20px 0;
+    width: 100%;
+}
+
+h1 {
+    margin: 0;
 }
 
 .container {
     background-color: white;
-    padding: 2rem;
-    border-radius: 5px;
+    padding: 3rem;
+    border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    width: 100%;
+    max-width: 800px;
+    width: 140%;
+    margin-top: 20px;
 }
 
-h1, h2 {
+h2 {
     text-align: center;
 }
 
 button {
     display: block;
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+    padding: 15px;
+    margin: 15px 0;
     background-color: #007bff;
     color: white;
     border: none;
@@ -42,17 +54,17 @@ button:hover {
 #options {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 20px;
 }
 
 #options button {
-    text-align: left;
+    text-align: center;
 }
 
 input[type="text"] {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+    padding: 15px;
+    margin: 15px 0;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
@@ -60,3 +72,15 @@ input[type="text"] {
 #leaderboardList {
     padding-left: 20px;
 }
+
+#options button.selected {
+    background-color: #23405f;
+    color: white;
+}
+
+.quizholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
