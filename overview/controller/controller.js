@@ -4,14 +4,14 @@ const getAllDRS = async (req, res) =>{
     try{
         const drs = await DRS.getAllDRS();
         res.json(drs);
-    } catch(error){
-        console.error(error);
+    } catch(err){
+        console.error("Error retrieving DRS",err);
         res.status(500).send("Error retrieving data");
     }
 };
 
 const getDRSByWeekly = async (req,res) =>{
-    const drsWeekly = parseInt(req.params.weekly)
+    const drsWeekly = parseInt(req.params.weekly,10)
     try{
         const drs = await DRS.getDRSByWeekly(drsWeekly);
         if(!drs){
@@ -23,8 +23,69 @@ const getDRSByWeekly = async (req,res) =>{
         res.status(500).send("Error retrieving data");
     }
 };
+const createDRS = async (req,res) =>{
+    const newData = req.body;
+    try{
+        const createdData = await DRS.createDRS(newData);
+        if(!createdData){
+            return res.status(404).send("Data field is required");
+        }
+        res.status(201).json(createdData);
+    }catch(error){
+        console.error(error)
+        res.status(500).send("Error creating Data");
+    }
+}
+const updateDRS = async (req,res) =>{
+    const dataWeekly = parseInt(req.params.weekly);
+    const newDRSData = req.body;
+    try{
+        const updatedDRS = await DRS.updateDRS(dataWeekly,newDRSData)
+        if(!updatedDRS){
+            return res.status(404).send("Data not found")
+        }
+        res.json(updatedDRS)
+    }catch(error){
+        console.error(error)
+        res.status(500).send("Error updating Data")
+    }
+}
+const deleteDRS = async(req,res) =>{
+    const dataWeekly = parseInt(req.params.weekly,10);
+    try{
+        const success = await DRS.deleteDRS(dataWeekly);
+        if(!success){
+            return res.status(404).send("Data not found");
+        }
+        return res.status(204).send("Delete successful")
+    }catch(error){
+        console.error(error);
+        res.status(500).send("Error deleting Data")
+    }
+}
+const searchData = async (req, res) => {
+    const searchTerm = req.query.week;
+    console.log(`Search query week: ${searchTerm}`);
+    try {
+        const data = await DRS.getDRSByWeekly(parseInt(searchTerm, 10)); // Change: Parse search term as integer
+        console.log("Query Result:", data);
+        if (!data) {
+            return res.status(404).send("Data not found"); // Change: Add 404 response if no data found
+        }
+        res.json(data);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Error searching data"
+        });
+    }
+};
 
 module.exports = {
     getAllDRS,
     getDRSByWeekly,
+    createDRS,
+    updateDRS,
+    deleteDRS,
+    searchData
 };

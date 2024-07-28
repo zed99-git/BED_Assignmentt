@@ -1,13 +1,28 @@
 const express = require("express");
-const controller = require("./controller/controller");
+const controller = require("./controller/controller"); 
 const sql = require("mssql"); 
 const dbConfig = require("./dbConfig");
+const bodyParser = require("body-parser");
+const cors = require('cors');
 
 const app = express();
-const port = process.env.PORT || 3000; 
+const port = 3000; 
+
+app.use(cors());
+
+const staticMiddleware = express.static("public");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(staticMiddleware);
 
 app.get("/data", controller.getAllDRS);
 app.get("/data/:weekly", controller.getDRSByWeekly);
+app.post("/data",controller.createDRS);
+app.delete("/data/:weekly",controller.deleteDRS);
+app.put("/data/:weekly",controller.updateDRS);
+
+app.get("/data/search",controller.searchData);
 
 app.listen(port, async () => {
   try {
@@ -30,3 +45,4 @@ process.on("SIGINT", async () => {
   console.log("Database connection closed");
   process.exit(0); 
 });
+
