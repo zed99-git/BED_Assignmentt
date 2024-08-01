@@ -57,3 +57,61 @@ pre{
 #line-height{
     line-height: 0%;
 }
+
+/*about us*/
+
+.content {
+    padding: 20px;
+    background: #fff;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+section {
+    margin: 20px 0;
+}
+
+.containers {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.responsive-image {
+    width: 100%; /* or a specific pixel value like 600px */
+    height: auto; /* maintain aspect ratio */
+}
+.containers:hover {
+    background-color: #fff; /* Ensure background color remains unchanged */
+}
+.containers :hover {
+    background-color: #fff; /* Ensure background color remains unchanged */
+}
+
+/* contact us */
+form div {
+    margin-bottom: 15px;
+    text-align: left; /* Ensure form labels and inputs are left-aligned */
+}
+
+label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 100px;
+}

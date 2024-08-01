@@ -1,0 +1,25 @@
+
+const sql = require('mssql');
+const dbConfig = require('../dbConfig');
+
+exports.bookSession = async (req, res) => {
+    try {
+        const { name, email, session_id } = req.body;
+
+        if (!name || !email || !session_id) {
+            return res.status(400).json({ message: 'All fields are required' });
+        }
+
+        const pool = await sql.connect(dbConfig);
+        const result = await pool.request()
+            .input('name', sql.VarChar, name)
+            .input('email', sql.VarChar, email)
+            .input('session_id', sql.Int, session_id)
+            .query('INSERT INTO Bookings (Name, Email, SessionID) VALUES (@name, @email, @session_id)');
+
+        res.status(201).json({ message: 'Session booked successfully' });
+    } catch (err) {
+        console.error('Error booking session:', err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};

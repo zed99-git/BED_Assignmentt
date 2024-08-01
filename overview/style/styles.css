@@ -41,7 +41,7 @@ h3{
 button{
     width: 100%;
     padding: 20px;
-    border-width: 0px;
+    border-width: 2px;
     background-color: white;
 }
 .container2 :hover{
@@ -124,4 +124,9 @@ pre{
 #imgData{
     width: 30%;
     height: 30%;
+}
+.searchbar{
+    border-radius: 50px;
+    width: fit-content; 
+    cursor: pointer;
 }

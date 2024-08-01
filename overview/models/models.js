@@ -8,7 +8,22 @@ class DRS{
         this.acute_upper_respiratory_tract_infections = acute_upper_respiratory_tract_infections;
         this.acute_diarrhoea = acute_diarrhoea;
     }
-    
+    static async createDRS(record){
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `INSERT INTO DRS (dengue,acute_upper_respiratory_tract_infections,acute_diarrhoea) VALUES (@dengue,@acute_upper_respiratory_tract_infections,@acute_diarrhoea); 
+        SELECT SCOPE_IDENTITY() AS weekly;`;//1st line creates, 2nd line retrieves the ID of inserted record
+
+        const request = connection.request();
+        request.input("dengue",record.dengue);
+        request.input("acute_upper_respiratory_tract_infections",record.acute_upper_respiratory_tract_infections);
+        request.input("acute_diarrhoea",record.acute_diarrhoea)
+
+        const result = await request.query(sqlQuery);
+        connection.close();
+
+        return this.getDRSByWeekly(result.recordset[0].weekly);
+    }
     static async getAllDRS(){
         const connection = await sql.connect(dbConfig);
 
@@ -43,6 +58,35 @@ class DRS{
             result.recordset[0].acute_diarrhoea,
         )
         :null;
+    }
+    static async updateDRS(weekly,updatedDRS){
+        const connection = await sql.connect(dbConfig);
+        
+        const sqlQuery = `UPDATE DRS SET dengue = @dengue, acute_upper_respiratory_tract_infections = @acute_upper_respiratory_tract_infections, acute_diarrhoea = @acute_diarrhoea WHERE weekly = @weekly`
+        
+        const request = connection.request();
+        request.input("weekly",weekly)
+        request.input("dengue",updatedDRS.dengue || null)
+        request.input("acute_upper_respiratory_tract_infections",updatedDRS.acute_upper_respiratory_tract_infections || null)
+        request.input("acute_diarrhoea",updatedDRS.acute_diarrhoea || null)
+
+        await request.query(sqlQuery);
+        connection.close();
+
+        return this.getDRSByWeekly(weekly);
+    }
+
+    static async deleteDRS(weekly){
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `DELETE FROM DRS WHERE weekly = @weekly`
+
+        const request = connection.request();
+        request.input("weekly",weekly)
+        const result = await request.query(sqlQuery);
+
+        connection.close();
+        return result.rowsAffected > 0;
     }
 }
 
