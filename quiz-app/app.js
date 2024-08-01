@@ -6,14 +6,15 @@ const questionController = require('./controllers/questionController');
 const leaderboardController = require('./controllers/leaderboardController');
 const sql = require('mssql');
 const cors = require('cors');
-
+const path = require('path');
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());
-app.use(express.static('public'));
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 
