@@ -27,12 +27,17 @@ document.addEventListener('DOMContentLoaded', () => {
         quizContainer.style.display = 'block';
         leaderboardContainer.style.display = 'none';
         
+        score = 0;
+        currentQuestionIndex = 0;
+        scoreHasBeenSaved = false;
+
         try {
             const response = await fetch(`${BASE_URL}/questions`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             currentQuestions = await response.json();
+            console.log('Fetched questions:', currentQuestions);
             showQuestion();
         } catch (error) {
             console.error('Error fetching questions:', error);
@@ -44,19 +49,36 @@ document.addEventListener('DOMContentLoaded', () => {
             showResult();
             return;
         }
-
+    
         const question = currentQuestions[currentQuestionIndex];
+        console.log('Displaying question:', question);
+    
+        // Clear the previous question and options
+        questionEl.textContent = '';
+        optionsEl.innerHTML = '';
+    
+        // Set the new question
         questionEl.textContent = question.question;
         
-        optionsEl.innerHTML = '';
+        // Create and append new option buttons
         ['a', 'b', 'c', 'd'].forEach(option => {
             const button = document.createElement('button');
             button.textContent = question[`option_${option}`];
+            console.log(`Option ${option}:`, button.textContent);
             button.addEventListener('click', () => selectOption(button));
             optionsEl.appendChild(button);
         });
-
-        selectedOption = null; // Reset selected option for new question
+    
+        // Reset selected option
+        selectedOption = null;
+    
+        // Clear any previously selected option styling
+        const buttons = optionsEl.getElementsByTagName('button');
+        for (let button of buttons) {
+            button.style.backgroundColor = '';
+        }
+    
+        console.log('Question updated. Current index:', currentQuestionIndex);
     }
 
     function selectOption(button) {
@@ -75,14 +97,37 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Please select an answer before submitting.');
             return;
         }
-
+    
         const question = currentQuestions[currentQuestionIndex];
-        if (selectedOption.textContent === question.correct_option) {
-            score += 10; // Add 10 points for correct answer
+        const selectedAnswer = selectedOption.textContent.trim();
+        const correctAnswerLetter = question.correct_option.trim();
+        
+        // Find the index of the correct answer (0 for a, 1 for b, etc.)
+        const correctIndex = correctAnswerLetter.charCodeAt(0) - 'a'.charCodeAt(0);
+        
+        // Get the full text of the correct answer
+        const correctAnswer = question[`option_${correctAnswerLetter}`];
+    
+        console.log('Selected answer:', selectedAnswer);
+        console.log('Correct answer:', correctAnswer);
+    
+        if (selectedAnswer === correctAnswer) {
+            score += 10;
+            console.log('Correct! New score:', score);
+        } else {
+            console.log('Incorrect. Score remains:', score);
         }
-
+    
         currentQuestionIndex++;
         showQuestion();
+        
+        // Update score display
+        const currentScoreElement = document.getElementById('currentScore');
+        if (currentScoreElement) {
+          currentScoreElement.textContent = score;
+        } else {
+            console.error('currentScore element not found');
+    }
     }
 
     function showResult() {
@@ -92,12 +137,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function saveScore() {
+        if (scoreHasBeenSaved) {
+            alert('Your score has already been saved.');
+            return;
+        }
+    
         const username = usernameInput.value.trim();
         if (!username) {
             alert('Please enter your name before saving the score.');
             return;
         }
-
+    
         try {
             const response = await fetch(`${BASE_URL}/leaderboard`, {
                 method: 'POST',
@@ -106,12 +156,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify({ username, score }),
             });
-
+    
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-
+    
             alert('Score saved successfully!');
+            scoreHasBeenSaved = true;
+            
+            // Disable the save button
+            const saveScoreBtn = document.getElementById('saveScore');
+            if (saveScoreBtn) {
+                saveScoreBtn.disabled = true;
+            }
+    
+            // Optionally, show a saved message
+            const savedMessage = document.getElementById('savedMessage');
+            if (savedMessage) {
+                savedMessage.style.display = 'block';
+            }
+    
             updateLeaderboard();
         } catch (error) {
             console.error('Error saving score:', error);
